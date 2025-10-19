@@ -1,33 +1,137 @@
 import Layout from "@/layout/Layout";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 function Home() {
     return (
         <Layout>
-            <div className="relative">
-                <div className="absolute bottom-40 left-48 max-w-[30rem] space-y-4">
-                    <h1 className="text-primary text-5xl font-bold">
-                        Shopping And
-                    </h1>
-                    <h1 className="text-primary text-5xl font-bold">
-                        Department Store
-                    </h1>
-                    <p className="mt-8 text-xl">
-                        Shopping is a bit of a relaxing hobby for me, which is
-                        sometimes troubling for the bank balance.
-                    </p>
-                    <button className="bg-primary mt-8 cursor-pointer rounded-full px-8 py-4 text-xl font-bold text-white hover:opacity-50">
-                        Learn More
-                    </button>
+            <div>
+                <div className="relative mx-auto mt-8 flex max-w-8/12 justify-center bg-black py-4">
+                    <div className="ml-16 flex flex-col justify-center gap-4 text-white">
+                        <p>iPhone 14 series</p>
+                        <p className="max-w-10/12 text-6xl leading-20">
+                            Up to off 10% off Voucher
+                        </p>
+                        <Link className="underline underline-offset-6">
+                            Shop Now
+                        </Link>
+                    </div>
+                    <img
+                        src="/src/assets/hero_endframe__iphone14_large 2.png"
+                        loading="lazy"
+                        sizes="(max-width: 1439px) 100vw, 1440px"
+                        alt=""
+                    ></img>
                 </div>
-                <img
-                    src="https://cdn.prod.website-files.com/63e857eaeaf853471d5335ff/63e9b930e006824963189865_bg-stage.png"
-                    loading="lazy"
-                    sizes="(max-width: 1439px) 100vw, 1440px"
-                    srcset="https://assets-global.website-files.com/63e857eaeaf853471d5335ff/63e9b930e006824963189865_bg-stage-p-500.png 500w, https://assets-global.website-files.com/63e857eaeaf853471d5335ff/63e9b930e006824963189865_bg-stage-p-800.png 800w, https://assets-global.website-files.com/63e857eaeaf853471d5335ff/63e9b930e006824963189865_bg-stage-p-1080.png 1080w, https://assets-global.website-files.com/63e857eaeaf853471d5335ff/63e9b930e006824963189865_bg-stage.png 1440w"
-                    alt=""
-                ></img>
+                <SectionHome title={"Today's"} header={"Flash Sales"}>
+                    <div>
+                        <ProductCard />
+                    </div>
+                    <Button>View All Products</Button>
+                </SectionHome>
+                <SectionHome title={"Category"} header={"Browse By Category"}>
+                    <CategoryCard>
+                        <img src="" alt="img category" />
+                        <p>Phone</p>
+                    </CategoryCard>
+                </SectionHome>
+                <SectionHome
+                    title={"This Month"}
+                    header={"Best Selling Products"}
+                >
+                    <div className="flex">
+                        <ProductCard />
+                    </div>
+                </SectionHome>
+                {/* banner */}
+                <SectionHome
+                    title={"Our Products"}
+                    header={"Explore Our Products"}
+                >
+                    <ProductCard />
+                    <Button>View All Products</Button>
+                </SectionHome>
+                <SectionHome title={"Featured"} header={"New rrival"}>
+                    {/* content */}
+                </SectionHome>
             </div>
         </Layout>
+    );
+}
+
+// function Baner() {
+//     return (
+
+//     )
+// }
+
+function CategoryCard({ children }) {
+    return (
+        <div className="flex flex-col items-center justify-center gap-4">
+            {children}
+        </div>
+    );
+}
+
+function SectionHome({ title, header, children }) {
+    return (
+        <section className="mt-[8.75]">
+            <div>
+                <div className="flex items-center">
+                    <div className="bg-primary h-10 w-5 rounded-sm"></div>
+                    <p>{title}</p>
+                </div>
+                <div>
+                    <h2>{header}</h2>
+                    <div className="flex items-center">
+                        <div>
+                            <p>Days</p>
+                            <p>03</p>
+                        </div>
+                        :
+                        <div>
+                            <p>Hours</p>
+                            <p>23</p>
+                        </div>
+                        :
+                        <div>
+                            <p>Minutes</p>
+                            <p>19</p>
+                        </div>
+                        :
+                        <div>
+                            <p>second</p>
+                            <p>56</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {children}
+        </section>
+    );
+}
+
+function ProductCard({ sale }) {
+    return (
+        <div>
+            <div>
+                <p>-40%</p>
+                <p>tim</p>
+                <p>eye</p>
+                <img src="" alt="img product" />
+            </div>
+            <div>
+                <h3>Havit HV-G92</h3>
+                <div>
+                    <p>$120</p>
+                    {sale && <p>$160</p>}
+                </div>
+                <div>
+                    <p>5sa0</p>
+                    <p>luot danh gia</p>
+                </div>
+            </div>
+        </div>
     );
 }
 

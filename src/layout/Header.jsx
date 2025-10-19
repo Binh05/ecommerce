@@ -23,12 +23,12 @@ function Header() {
                     </ul>
                 </nav>
                 <div className="flex gap-4 rounded-full border-[1px] px-3 py-1">
-                    <Search />
                     <input
                         className="outline-none"
                         type="text"
                         placeholder="Search Product"
                     />
+                    <Search />
                 </div>
                 <div className="flex gap-4">
                     <IconText text={"Account"}>
