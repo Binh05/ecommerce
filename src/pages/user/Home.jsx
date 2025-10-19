@@ -15,7 +15,7 @@ function Home() {
                         Shopping is a bit of a relaxing hobby for me, which is
                         sometimes troubling for the bank balance.
                     </p>
-                    <button className="bg-primary mt-8 cursor-pointer rounded-4xl px-8 py-4 text-xl font-bold text-white hover:opacity-50">
+                    <button className="bg-primary mt-8 cursor-pointer rounded-full px-8 py-4 text-xl font-bold text-white hover:opacity-50">
                         Learn More
                     </button>
                 </div>

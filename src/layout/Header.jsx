@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { User, ShoppingCart, Search } from "lucide-react";
 
 function Header() {
     return (
@@ -21,7 +22,8 @@ function Header() {
                         </li>
                     </ul>
                 </nav>
-                <div className="rounded-4xl border-[1px] px-8 py-1">
+                <div className="flex gap-4 rounded-full border-[1px] px-3 py-1">
+                    <Search />
                     <input
                         className="outline-none"
                         type="text"
@@ -29,17 +31,22 @@ function Header() {
                     />
                 </div>
                 <div className="flex gap-4">
-                    <IconText text={"Account"} />
-                    <IconText text={"Cart"} />
+                    <IconText text={"Account"}>
+                        <User />
+                    </IconText>
+                    <IconText text={"Cart"}>
+                        <ShoppingCart />
+                    </IconText>
                 </div>
             </div>
         </header>
     );
 }
 
-function IconText({ text }) {
+function IconText({ text, children }) {
     return (
-        <div>
+        <div className="flex gap-1">
+            {children}
             <p>{text}</p>
         </div>
     );
