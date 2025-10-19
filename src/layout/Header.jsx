@@ -8,7 +8,7 @@ function Header() {
                 <nav>
                     <ul className="flex items-center gap-8 font-bold">
                         <li>
-                            <Link>Category</Link>
+                            <Link to={"/category"}>Category</Link>
                         </li>
                         <li>
                             <Link>Deals</Link>
