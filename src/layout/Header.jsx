@@ -3,7 +3,7 @@ import { User, ShoppingCart, Search } from "lucide-react";
 
 function Header() {
     return (
-        <header className="flex h-20 w-full items-center justify-center">
+        <header className="flex h-20 w-full items-center justify-center border-b-2">
             <div className="flex w-[80%] items-center justify-between">
                 <p className="text-2xl">Shopcart</p>
                 <nav>

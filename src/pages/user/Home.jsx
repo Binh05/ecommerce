@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button";
 function Home() {
     return (
         <Layout>
-            <div>
-                <div className="relative mx-auto mt-8 flex max-w-8/12 justify-center bg-black py-4">
-                    <div className="ml-16 flex flex-col justify-center gap-4 text-white">
+            <div className="max-w-[80%]">
+                <div className="relative mt-8 flex justify-center bg-black py-4">
+                    <div className="mx-auto ml-16 flex flex-col justify-center gap-4 text-white">
                         <p>iPhone 14 series</p>
-                        <p className="max-w-10/12 text-6xl leading-20">
+                        <p className="max-w-[25rem] text-6xl leading-20">
                             Up to off 10% off Voucher
                         </p>
                         <Link className="underline underline-offset-6">

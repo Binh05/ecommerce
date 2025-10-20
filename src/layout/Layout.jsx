@@ -5,7 +5,7 @@ function Layout({ children }) {
     return (
         <>
             <Header />
-            <main>{children}</main>
+            <main className="flex flex-col items-center">{children}</main>
             <Footer />
         </>
     );
