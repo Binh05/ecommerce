@@ -58,7 +58,7 @@ function AdminLayout() {
           <div className={styles.rightIcons}>
             <input
               type="text"
-              placeholder="Tìm kiếm..."
+              placeholder="Tìm kiếm ..."
               className={styles.searchBar}
             />
             <DropdownMenu avatarUrl={"https://tse1.mm.bing.net/th/id/OIP.oEyuICoK3gMcmZo4Cz8zLwHaHy?cb=12&rs=1&pid=ImgDetMain&o=7&rm=3"} />
