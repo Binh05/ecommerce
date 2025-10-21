@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { ProductApi } from "@/apis/index";
 import { ProductHeader, ProductCard } from "@/components/user/ProductSection";
 import { Chevron } from "@/components/ui/chevron";
@@ -56,9 +57,12 @@ export default function FlashSales() {
 
                 {/* View All Button */}
                 <div className="mt-8 flex justify-center">
-                    <button className="rounded bg-red-500 px-12 py-3 font-semibold text-white transition hover:bg-red-600">
+                    <Link
+                        to={"/a-p"}
+                        className="rounded bg-red-500 px-12 py-3 font-semibold text-white transition hover:bg-red-600"
+                    >
                         View All Products
-                    </button>
+                    </Link>
                 </div>
             </div>
         </section>

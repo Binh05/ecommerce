@@ -1,5 +1,6 @@
 import { Heart, ShoppingCart, User, Search, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -7,7 +8,7 @@ export default function Header() {
     return (
         <>
             {/* Top Banner */}
-            <div className="bg-primary py-2 text-center text-sm text-white">
+            <div className="bg-black py-2 text-center text-sm text-white">
                 Summer Sale For All Swim Suits And Free Express Delivery - OFF
                 50%! <span className="font-semibold">ShopNow</span>
             </div>
@@ -21,30 +22,30 @@ export default function Header() {
 
                         {/* Navigation - Desktop */}
                         <nav className="hidden items-center gap-8 md:flex">
-                            <a
-                                href="#"
+                            <Link
+                                to={"/"}
                                 className="hover:text-primary text-gray-700 transition"
                             >
                                 Home
-                            </a>
-                            <a
-                                href="#"
+                            </Link>
+                            <Link
+                                to={"/"}
                                 className="hover:text-primary text-gray-700 transition"
                             >
                                 Contact
-                            </a>
-                            <a
-                                href="#"
+                            </Link>
+                            <Link
+                                to={"/"}
                                 className="hover:text-primary text-gray-700 transition"
                             >
                                 About
-                            </a>
-                            <a
-                                href="#"
+                            </Link>
+                            <Link
+                                to={"/"}
                                 className="hover:text-primary text-gray-700 transition"
                             >
                                 Sign Up
-                            </a>
+                            </Link>
                         </nav>
 
                         {/* Search Bar - Desktop */}
@@ -95,18 +96,18 @@ export default function Header() {
 function MobileMenu() {
     return (
         <nav className="mt-4 flex flex-col gap-4 pb-4 md:hidden">
-            <a href="#" className="hover:text-primary text-gray-700">
+            <Link to={"/"} className="hover:text-primary text-gray-700">
                 Home
-            </a>
-            <a href="#" className="hover:text-primary text-gray-700">
+            </Link>
+            <Link to={"/"} className="hover:text-primary text-gray-700">
                 Contact
-            </a>
-            <a href="#" className="hover:text-primary text-gray-700">
+            </Link>
+            <Link to={"/"} className="hover:text-primary text-gray-700">
                 About
-            </a>
-            <a href="#" className="hover:text-primary text-gray-700">
+            </Link>
+            <Link to={"/"} className="hover:text-primary text-gray-700">
                 Sign Up
-            </a>
+            </Link>
             <div className="flex items-center rounded bg-gray-100 px-4 py-2">
                 <input
                     type="text"
