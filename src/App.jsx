@@ -12,11 +12,13 @@ function App() {
 
             {/* <Route path="/" element={<Navigate to="/admin/Dashboard" replace />} /> */}
             <Route path="/admin" element={<AdminLayout />}>
-                <Route path="/admin/Dashboard" element={<Dashboard />} />
-                <Route path="/admin/Products" element={<div>Sản phẩm</div>} />
-                <Route path="/admin/Orders" element={<div>Đơn hàng</div>} />
-                <Route path="/admin/Customers" element={<div>Khách hàng</div>} />
+                <Route index element={<Dashboard />} />    
+                <Route path="Dashboard" element={<Dashboard />} />
+                <Route path="Products" element={<div>Sản phẩm</div>} />
+                <Route path="Orders" element={<div>Đơn hàng</div>} />
+                <Route path="Customers" element={<div>Khách hàng</div>} />
             </Route>
+
             
             <Route path="/" element={<Home />} />
             <Route path="/category" element={<Category />} />
