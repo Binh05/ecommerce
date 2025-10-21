@@ -1,8 +1,11 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import clsx from "clsx";
 
-function Chevron() {
-    const clasNameButton =
-        "rounded-full bg-gray-100 cursor-pointer p-2 transition hover:opacity-50";
+function Chevron({ className }) {
+    const clasNameButton = clsx(
+        "rounded-full bg-gray-100 cursor-pointer p-2 transition hover:opacity-50",
+        className,
+    );
 
     return (
         <div className="flex items-center gap-2">

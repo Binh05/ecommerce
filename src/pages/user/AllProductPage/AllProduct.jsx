@@ -12,6 +12,7 @@ import {
     PaginationNext,
     PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Chevron } from "@/components/ui/chevron";
 
 function AllProduct() {
     const [products, setProducts] = useState([]);
@@ -32,15 +33,18 @@ function AllProduct() {
             <section className="py-20">
                 {/* sort */}
                 <div className="mx-auto max-w-7xl px-4">
-                    <div className="flex items-center gap-4 bg-gray-100 px-4 py-4">
-                        <p>Sắp xếp theo</p>
-                        <Button>Liên quan</Button>
-                        <Button className="bg-white text-black">
-                            Mới nhất
-                        </Button>
-                        <Button className="bg-white text-black">
-                            Bán chạy{" "}
-                        </Button>
+                    <div className="flex justify-between bg-gray-100 px-4 py-4">
+                        <div className="flex items-center gap-4">
+                            <p>Sắp xếp theo</p>
+                            <Button>Liên quan</Button>
+                            <Button className="bg-white text-black">
+                                Mới nhất
+                            </Button>
+                            <Button className="bg-white text-black">
+                                Bán chạy{" "}
+                            </Button>
+                        </div>
+                        <Chevron className="bg-white" />
                     </div>
                 </div>
 
