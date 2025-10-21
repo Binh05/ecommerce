@@ -30,7 +30,7 @@ export default function Features() {
                                 key={idx}
                                 className="flex flex-col items-center text-center"
                             >
-                                <div className="mb-4 rounded-full bg-gray-100 p-4">
+                                <div className="mb-4 rounded-full bg-gray-200 p-4">
                                     <Icon size={32} className="text-red-500" />
                                 </div>
                                 <h3 className="mb-2 text-lg font-bold">

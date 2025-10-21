@@ -1,3 +1,4 @@
+import { ProductHeader } from "@/components/user/ProductSection";
 import {
     Smartphone,
     Monitor,
@@ -21,12 +22,7 @@ function Category() {
         <section className="border-b border-gray-200 bg-white py-12 md:py-20">
             <div className="mx-auto max-w-7xl px-4">
                 {/* Header */}
-                <div className="mb-8 flex items-center gap-4">
-                    <div className="h-8 w-4 rounded bg-red-500"></div>
-                    <h2 className="text-2xl font-bold md:text-3xl">
-                        Browse By Category
-                    </h2>
-                </div>
+                <ProductHeader title={"Browse By Category"} />
 
                 {/* Categories Grid */}
                 <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
