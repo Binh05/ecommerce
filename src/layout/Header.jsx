@@ -41,10 +41,10 @@ export default function Header() {
                                 About
                             </Link>
                             <Link
-                                to={"/"}
+                                to={"/a-p"}
                                 className="hover:text-primary text-gray-700 transition"
                             >
-                                Sign Up
+                                All Product
                             </Link>
                         </nav>
 
@@ -105,8 +105,8 @@ function MobileMenu() {
             <Link to={"/"} className="hover:text-primary text-gray-700">
                 About
             </Link>
-            <Link to={"/"} className="hover:text-primary text-gray-700">
-                Sign Up
+            <Link to={"/a-p"} className="hover:text-primary text-gray-700">
+                All Product
             </Link>
             <div className="flex items-center rounded bg-gray-100 px-4 py-2">
                 <input
