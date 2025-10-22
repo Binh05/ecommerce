@@ -1,0 +1,143 @@
+.container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dropdown, .searchInput {
+  padding: 8px 12px;
+  border: 1px solid #ff5a5a;
+  border-radius: 8px;
+  font-size: 14px;
+}
+.dropdown option {
+  background-color: #e03a3a;
+  color: #fff;
+  padding: 10px;
+}
+
+.headerActions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.actionButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: 500;
+}
+
+.primary {
+  background-color: #b91c1c;
+  color: white;
+}
+
+.primary:hover {
+  background-color: #dc2626;
+}
+
+.secondary {
+  background-color: #f1f5f9;
+  color: #333;
+}
+
+.secondary:hover {
+  background-color: #f0e2e2;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.productCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  transition: 0.2s;
+}
+
+.productCard:hover {
+  background-color: #f0b1b1;
+}
+
+.productInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.productImage {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 10px;
+  background-color: #f8fafc;
+}
+
+
+.textInfo h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.textInfo p {
+  margin: 0;
+  color: gray;
+  font-size: 13px;
+}
+
+.stock {
+  font-size: 15px;
+  color: #2563eb;
+}
+
+.productActions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.price {
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.iconBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.iconBtn:hover {
+  background-color: #f1f5f9;
+}
+.filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

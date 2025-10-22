@@ -10,6 +10,8 @@ import {
     LineChart,
     Line,
 } from "recharts";
+import { useState, useEffect } from "react";
+import { ProductApi } from "@/apis"; 
 
 import khachHang from "./pictures/khachHang.png";
 import sanPham from "./pictures/sanPham.png";
@@ -17,21 +19,6 @@ import doanhThu from "./pictures/doanhThu.png";
 import donHang from "./pictures/donHang.png";
 
 
-const dataCards = [
-    { title: "Khách hàng", value: "1,245", img: khachHang},
-    { title: "Sản phẩm", value: "320", img: sanPham},
-    { title: "Doanh thu", value: "82.500.000₫", img: doanhThu},
-    { title: "Đơn hàng", value: "3.000", img: donHang},
-
-];
-const chartData = [
-    { month: "Jan", revenue: 2500000, orders: 40 },
-    { month: "Feb", revenue: 3200000, orders: 52 },
-    { month: "Mar", revenue: 4500000, orders: 68 },
-    { month: "Apr", revenue: 3700000, orders: 55 },
-    { month: "May", revenue: 5200000, orders: 80 },
-    { month: "Jun", revenue: 6100000, orders: 90 },
-];
 function CardThongKe({item, i}) {
     return (
         <div key={i} className={styles.card}>
@@ -48,6 +35,33 @@ function CardThongKe({item, i}) {
     );
 }
 function Dashboard() {
+    const [productCount, setProductCount] = useState(0);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await ProductApi.getPhoneProductApi();
+                setProductCount(res.data.products.length);
+            } catch (error) {
+                console.error("Lỗi lấy sản phẩm:", error);
+            }
+        })();
+    }, []);
+
+    const dataCards = [
+        { title: "Khách hàng", value: "1,245", img: khachHang },
+        { title: "Sản phẩm", value: productCount, img: sanPham }, // 🔹 dùng state productCount
+        { title: "Doanh thu", value: "82.500.000₫", img: doanhThu },
+        { title: "Đơn hàng", value: "3.000", img: donHang },
+    ];
+    const chartData = [
+        { month: "Jan", revenue: 2500000, orders: 40 },
+        { month: "Feb", revenue: 3200000, orders: 52 },
+        { month: "Mar", revenue: 4500000, orders: 68 },
+        { month: "Apr", revenue: 3700000, orders: 55 },
+        { month: "May", revenue: 5200000, orders: 80 },
+        { month: "Jun", revenue: 6100000, orders: 90 },
+    ];
     return (
         <div className={styles.dashboard}>
             <div className={styles.cardContainer}>
