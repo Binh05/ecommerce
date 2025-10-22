@@ -94,7 +94,7 @@ function Dashboard() {
                             }}
 
                             />
-                            <Bar dataKey="revenue" fill="#3B82F6" name="Doanh thu" />
+                            <Bar dataKey="revenue" fill="#ef4444" name="Doanh thu" />
                             <Bar dataKey="orders" fill="#F59E0B" name="Đơn hàng" />
                         </BarChart>
                      </ResponsiveContainer>
