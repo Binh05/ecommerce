@@ -32,23 +32,27 @@ const chartData = [
     { month: "May", revenue: 5200000, orders: 80 },
     { month: "Jun", revenue: 6100000, orders: 90 },
 ];
-
+function CardThongKe({item, i}) {
+    return (
+        <div key={i} className={styles.card}>
+            <div className={styles.cardInner}>
+                <div
+                    className={styles.cardImageWrapper}
+                >
+                    <img src={item.img} alt={item.title} className={styles.cardImg} />
+                </div>
+                <h2 className={styles.cardTitle}>{item.title}</h2>
+                <p className={styles.cardValue}>{item.value}</p>
+            </div>
+        </div>
+    );
+}
 function Dashboard() {
     return (
         <div className={styles.dashboard}>
             <div className={styles.cardContainer}>
                 {dataCards.map((item, i) => (
-                    <div key={i} className={styles.card}>
-                        <div className={styles.cardInner}>
-                            <div
-                                className={styles.cardImageWrapper}
-                            >
-                                <img src={item.img} alt={item.title} className={styles.cardImg} />
-                            </div>
-                            <h2 className={styles.cardTitle}>{item.title}</h2>
-                            <p className={styles.cardValue}>{item.value}</p>
-                        </div>
-                    </div>
+                    <CardThongKe item={item} i={i} />
                 ))}
             </div>
 
