@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 import styles from "./moduleCss/products.module.css";
 import { Edit, Trash2, PlusCircle, RefreshCw, Smartphone, Monitor, Phone, Camera, Headphones, Gamepad2 } from "lucide-react";
-import { ProductApi } from "@/apis"; // 
+import { ProductApi } from "@/apis"; 
+import { PaginationComp } from "./components/PaginationComp.jsx";
+
 const categories = [
     { name: "Tất cả", icon: null },
     { name: "Phones", icon: Smartphone },
@@ -46,11 +48,13 @@ function ProductCard({ index, product, onEdit, onDelete }) {
     );
 }
 
-function Products() {
+export default function Products() {
     const [categoryFilter, setCategoryFilter] = useState("Tất cả");
     const [searchTerm, setSearchTerm] = useState("");
     const [products, setProducts] = useState([]);
     const [sortOption, setSortOption] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
 
     useEffect(() => {
         (async () => {
@@ -89,10 +93,18 @@ function Products() {
         return result;
     }, [categoryFilter, searchTerm, sortOption, products]);
 
+    // Phân trang
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const paginatedProducts = useMemo(() => {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
+    }, [filteredProducts, currentPage]);
+
     const handleRefresh = async () => {
         try {
             const res = await ProductApi.getPhoneProductApi();
             setProducts(res.data.products || []);
+            setCurrentPage(1);
         } catch (error) {
             console.error("Lỗi khi làm mới dữ liệu:", error);
         }
@@ -105,11 +117,7 @@ function Products() {
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.filters}>
-                    <select
-                        className={styles.dropdown}
-                        value={categoryFilter}
-                        onChange={(e) => setCategoryFilter(e.target.value)}
-                    >
+                    <select className={styles.dropdown} value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
                         {categories.map((cat) => (
                             <option key={cat.name} value={cat.name}>
                                 {cat.name}
@@ -117,11 +125,7 @@ function Products() {
                         ))}
                     </select>
 
-                    <select
-                        className={styles.dropdown}
-                        value={sortOption}
-                        onChange={(e) => setSortOption(e.target.value)}
-                    >
+                    <select className={styles.dropdown} value={sortOption} onChange={(e) => setSortOption(e.target.value)}>
                         <option value="">Sắp xếp</option>
                         <option value="priceAsc">Giá tăng dần</option>
                         <option value="priceDesc">Giá giảm dần</option>
@@ -139,34 +143,29 @@ function Products() {
                 />
 
                 <div className={styles.headerActions}>
-                    <ActionButton
-                        icon={RefreshCw}
-                        label="Làm mới"
-                        onClick={handleRefresh}
-                        color="secondary"
-                    />
-                    <ActionButton
-                        icon={PlusCircle}
-                        label="Thêm sản phẩm"
-                        onClick={handleAdd}
-                        color="primary"
-                    />
+                    <ActionButton icon={RefreshCw} label="Làm mới" onClick={handleRefresh} color="secondary" />
+                    <ActionButton icon={PlusCircle} label="Thêm sản phẩm" onClick={handleAdd} color="primary" />
                 </div>
             </div>
 
             <div className={styles.list}>
-                {filteredProducts.map((product, index) => (
+                {paginatedProducts.map((product, index) => (
                     <ProductCard
                         key={product.id}
-                        index={index}
+                        index={(currentPage - 1) * itemsPerPage + index}
                         product={product}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
                 ))}
             </div>
+
+            <PaginationComp
+                className="mt-6 flex justify-center"
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+            />
         </div>
     );
 }
-
-export default Products;
