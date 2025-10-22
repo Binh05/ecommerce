@@ -1,8 +1,8 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import Home from "@/pages/user/HomePage/Home";
+import Home from "@/pages/user/Home";
 import Dashboard from "@/pages/admin/Dashboard";
 import AdminLayout from "@/pages/admin/AdminLayout";
-import AllProduct from "./pages/user/AllProductPage/AllProduct";
+import AllProduct from "./pages/user/AllProduct";
 
 function App() {
     return (

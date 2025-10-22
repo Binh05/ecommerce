@@ -1,12 +1,12 @@
 import Layout from "@/layout/Layout";
 import { Link } from "react-router-dom";
-import FlashSales from "@/pages/user/HomePage/FlashSales";
-import Category from "./category";
-import BestSelling from "./BestSelling";
-import PromoSection from "./PromoSection";
-import ExploreProducts from "./ExploreProducts";
-import NewArrival from "./NewArrival";
-import Features from "./Features";
+import FlashSales from "@/components/user/HomePage/FlashSales";
+import Category from "@/components/user/HomePage/category";
+import BestSelling from "@/components/user/HomePage/BestSelling";
+import PromoSection from "@/components/user/HomePage/PromoSection";
+import ExploreProducts from "@/components/user/HomePage/ExploreProducts";
+import NewArrival from "@/components/user/HomePage/NewArrival";
+import Features from "@/components/user/HomePage/Features";
 
 export default function Home() {
     return (

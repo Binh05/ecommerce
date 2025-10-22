@@ -1,8 +1,8 @@
 import Layout from "@/layout/Layout";
 import { PaginationComp } from "@/components/user/PaginationComp";
-import SortBy from "./SortBy";
-import Products from "./Products";
-import FilterBy from "./FilterBy";
+import SortBy from "../../components/user/AllProductPage/SortBy";
+import Products from "../../components/user/AllProductPage/Products";
+import FilterBy from "../../components/user/AllProductPage/FilterBy";
 
 function AllProduct() {
     return (
