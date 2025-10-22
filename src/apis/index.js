@@ -1,10 +1,23 @@
 import axios from "axios";
-import "@/apis/mock_phone";
+import "@/apis/mock_phone"; 
+import orders from "./mock_orders"; 
 
 const getPhoneProductApi = async () => {
     return await axios.get("https://dummyjson.com/products/search?q=phone");
 };
 
+const getOrdersApi = async () => {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve({ data: orders });
+        }, 500);
+    });
+};
+
 export const ProductApi = {
     getPhoneProductApi,
+};
+
+export const OrderApi = {
+    getOrdersApi,
 };
