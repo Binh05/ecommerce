@@ -4,7 +4,8 @@ import Dashboard from "@/pages/admin/Dashboard";
 import Products from "@/pages/admin/Products";
 import Orders from "@/pages/admin/Orders";
 import AdminLayout from "@/pages/admin/AdminLayout";
-import AllProduct from "./pages/user/AllProduct";
+import AllProduct from "@/pages/user/AllProduct";
+import DetailPage from "@/pages/user/DetailPage";
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
 
             <Route path="/" element={<Home />} />
             <Route path="/a-p" element={<AllProduct />} />
+            <Route path="/detail" element={<DetailPage />} />
         </Routes>
     );
 }

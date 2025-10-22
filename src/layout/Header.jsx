@@ -29,6 +29,12 @@ export default function Header() {
                                 Home
                             </Link>
                             <Link
+                                to={"/a-p"}
+                                className="hover:text-primary text-gray-700 transition"
+                            >
+                                Product
+                            </Link>
+                            <Link
                                 to={"/"}
                                 className="hover:text-primary text-gray-700 transition"
                             >
@@ -39,12 +45,6 @@ export default function Header() {
                                 className="hover:text-primary text-gray-700 transition"
                             >
                                 About
-                            </Link>
-                            <Link
-                                to={"/a-p"}
-                                className="hover:text-primary text-gray-700 transition"
-                            >
-                                All Product
                             </Link>
                         </nav>
 
@@ -99,15 +99,16 @@ function MobileMenu() {
             <Link to={"/"} className="hover:text-primary text-gray-700">
                 Home
             </Link>
+            <Link to={"/a-p"} className="hover:text-primary text-gray-700">
+                Product
+            </Link>
             <Link to={"/"} className="hover:text-primary text-gray-700">
                 Contact
             </Link>
             <Link to={"/"} className="hover:text-primary text-gray-700">
                 About
             </Link>
-            <Link to={"/a-p"} className="hover:text-primary text-gray-700">
-                All Product
-            </Link>
+
             <div className="flex items-center rounded bg-gray-100 px-4 py-2">
                 <input
                     type="text"
