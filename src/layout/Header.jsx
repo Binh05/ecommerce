@@ -63,12 +63,15 @@ export default function Header() {
                             <button className="hover:text-primary hidden text-gray-700 transition md:block">
                                 <Heart size={24} />
                             </button>
-                            <button className="hover:text-primary relative text-gray-700 transition">
+                            <Link
+                                to="/cart"
+                                className="hover:text-primary relative text-gray-700 transition"
+                            >
                                 <ShoppingCart size={24} />
                                 <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
                                     2
                                 </span>
-                            </button>
+                            </Link>
                             <button className="hover:text-primary text-gray-700 transition">
                                 <User size={24} />
                             </button>
