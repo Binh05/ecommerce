@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import styles from "./moduleCss/products.module.css";
 import { Eye, PlusCircle, RefreshCw, Check} from "lucide-react";
-
+import {DetailPopup, DetailRow} from "./components/DetailPopup.jsx";
 import { OrderApi } from "@/apis";
 import { PaginationComp } from "./components/PaginationComp.jsx";
 import ActionButton from "./components/ActionButton.jsx"; 
@@ -24,16 +24,16 @@ function OrderCard({ order, onConfirm, onView }) {
                         className={styles.confirmBtn}
                         onClick={() => onConfirm(order)}
                     >
-                        <Check size={16} /> Xác nhận
+                        <Check size={18} /> Xác nhận
                     </button>
                 ) : (
                     <button className={styles.confirmedBtn} disabled>
-                        <Check size={16} /> Đã xác nhận
+                        <Check size={18} /> Đã xác nhận
                     </button>
                 )}
 
-                <button className={styles.viewBtn} onClick={() => onView(order)}>
-                    <Eye size={16} /> Xem
+                <button className={styles.iconBtn} onClick={() => onView(order)}>
+                    <Eye size={18} />
                 </button>
             </div>
         </div>
@@ -42,6 +42,7 @@ function OrderCard({ order, onConfirm, onView }) {
 
 export default function Orders() {
     const [orders, setOrders] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState(null);
     const [statusFilter, setStatusFilter] = useState("Tất cả");
     const [searchTerm, setSearchTerm] = useState("");
     const [startDate, setStartDate] = useState("");
@@ -93,8 +94,6 @@ export default function Orders() {
             prev.map((o) => (o.id === order.id ? { ...o, status: "Đã xác nhận" } : o))
         );
     };
-
-    const handleView = (order) => alert(JSON.stringify(order, null, 2));
 
     const handleRefresh = async () => {
         try {
@@ -167,7 +166,7 @@ export default function Orders() {
                         key={order.id}
                         order={order}
                         onConfirm={handleConfirm}
-                        onView={handleView}
+                        onView={setSelectedOrder}
                     />
                 ))}
             </div>
@@ -178,6 +177,62 @@ export default function Orders() {
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
             />
+             {selectedOrder && (
+                <DetailPopup
+                    title="Chi tiết khách hàng"
+                    onClose={() => setSelectedOrder(null)}
+                >
+                    <OrderDetailContent order={selectedOrder} />
+                </DetailPopup>
+            )}
         </div>
     );
+}
+function OrderDetailContent({ order }) {
+  if (!order) return null;
+
+  return (
+    <div className="space-y-3 text-gray-800">
+      <h3 className="text-lg font-semibold mb-3 text-red-600">
+        Thông tin đơn hàng
+      </h3>
+
+      <DetailRow label="Mã đơn" value={order.id} />
+      <DetailRow label="Khách hàng" value={order.customer} />
+      <DetailRow label="Ngày đặt" value={order.date} />
+      <DetailRow
+        label="Tổng tiền"
+        value={order.total.toLocaleString("vi-VN") + "₫"}
+      />
+
+      <DetailRow
+        label="Trạng thái"
+        value={
+          <span
+            className={`px-3 py-1 rounded-full text-sm ${
+              order.status === "Đã xác nhận"
+                ? "bg-green-100 text-green-600"
+                : order.status === "Đã hủy"
+                ? "bg-red-100 text-red-600"
+                : "bg-yellow-100 text-yellow-700"
+            }`}
+          >
+            {order.status}
+          </span>
+        }
+      />
+
+      <div className="border-t border-gray-200 pt-3">
+        <h4 className="font-medium text-gray-700 mb-2">Chi tiết sản phẩm:</h4>
+        <ul className="space-y-1 pl-4">
+          {order.items.map((item, i) => (
+            <li key={i} className="text-gray-700">
+              • {item.name} — {item.quantity} x{" "}
+              {item.price.toLocaleString("vi-VN")}₫
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 }
