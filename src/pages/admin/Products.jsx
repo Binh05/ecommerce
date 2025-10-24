@@ -3,6 +3,7 @@ import styles from "./moduleCss/products.module.css";
 import { Edit, Trash2, PlusCircle, RefreshCw, Smartphone, Monitor, Phone, Camera, Headphones, Gamepad2 } from "lucide-react";
 import { ProductApi } from "@/apis"; 
 import { PaginationComp } from "./components/PaginationComp.jsx";
+import ActionButton from "./components/ActionButton.jsx"; 
 
 const categories = [
     { name: "Tất cả", icon: null },
@@ -13,16 +14,6 @@ const categories = [
     { name: "HeadPhones", icon: Headphones },
     { name: "Gaming", icon: Gamepad2 },
 ];
-
-function ActionButton({ icon: Icon, label, onClick, color = "primary" }) {
-    return (
-        <button className={`${styles.actionButton} ${styles[color]}`} onClick={onClick}>
-            <Icon size={18} />
-            <span>{label}</span>
-        </button>
-    );
-}
-
 function ProductCard({ index, product, onEdit, onDelete }) {
     return (
         <div className={styles.productCard}>
@@ -141,10 +132,19 @@ export default function Products() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
-
                 <div className={styles.headerActions}>
-                    <ActionButton icon={RefreshCw} label="Làm mới" onClick={handleRefresh} color="secondary" />
-                    <ActionButton icon={PlusCircle} label="Thêm sản phẩm" onClick={handleAdd} color="primary" />
+                    <ActionButton
+                        icon={RefreshCw}
+                        label="Làm mới"
+                        onClick={handleRefresh}
+                        color="secondary"
+                    />
+                    <ActionButton
+                        icon={PlusCircle}
+                        label="Thêm sản phẩm"
+                        onClick={handleAdd}
+                        color="primary"
+                    />
                 </div>
             </div>
 
