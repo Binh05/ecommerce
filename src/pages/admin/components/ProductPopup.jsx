@@ -1,9 +1,9 @@
 import { X, Upload } from "lucide-react";
 import { useState, useEffect } from "react";
 import { categories } from "@/constants/category.js";
-
-export default function ProductPopup({ onClose, onSubmit, product = null, mode = "add" }) {
-  const isEditMode = mode === "edit";
+import ConfirmPopup from "./ConfirmPopup.jsx";
+export default function ProductPopup({ onClose, onSubmit, product = null }) {
+  const isEditMode = !!product;
 
   const [formData, setFormData] = useState({
     title: "",
@@ -17,6 +17,7 @@ export default function ProductPopup({ onClose, onSubmit, product = null, mode =
   const [preview, setPreview] = useState(null);
   const [dragActive, setDragActive] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const [errors, setErrors] = useState({});
 
   // --- Gán dữ liệu sản phẩm khi sửa ---
   useEffect(() => {
@@ -36,6 +37,7 @@ export default function ProductPopup({ onClose, onSubmit, product = null, mode =
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: "" })); // xóa lỗi khi sửa
   };
 
   const handleImageChange = (file) => {
@@ -54,30 +56,44 @@ export default function ProductPopup({ onClose, onSubmit, product = null, mode =
     setDragActive(false);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!formData.title || !formData.price) {
-      alert("Vui lòng nhập tên và giá sản phẩm!");
-      return;
-    }
-
-    // Khi nhấn Lưu -> mở popup xác nhận
-    setShowConfirm(true);
+  // --- Validate form ---
+  const validate = () => {
+      const newErrors = {};
+      if (!formData.title.trim()) newErrors.title = "Tên sản phẩm không được để trống";
+      if (!formData.price || isNaN(formData.price)) newErrors.price = "Giá sản phẩm không hợp lệ";
+      const categoryExists = categories.find(cat => cat.name === formData.category);
+      if (!formData.category || !categoryExists) {
+        newErrors.category = "Vui lòng chọn danh mục hợp lệ";
+      }
+      return newErrors;
   };
+
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      const errors = validate(); 
+      setErrors(errors);
+
+      if (Object.keys(errors).length === 0) {
+        setShowConfirm(true);
+      }
+  };
+
 
   const confirmSubmit = () => {
-    const finalProduct = {
-      id: product?.id || Date.now(),
-      ...formData,
-      price: parseFloat(formData.price),
-      stock: parseInt(formData.stock || "0"),
-      thumbnail: formData.thumbnail || "https://via.placeholder.com/150",
-    };
+      const finalProduct = {
+          id: product?.id || Date.now(),
+          ...formData,
+          price: parseFloat(formData.price),
+          stock: parseInt(formData.stock || "0"),
+          thumbnail: formData.thumbnail || "https://via.placeholder.com/150",
+      };
 
-    onSubmit(finalProduct);
-    setShowConfirm(false);
-    onClose();
+      onSubmit(finalProduct); // gọi callback từ parent (Products.jsx)
+      setShowConfirm(false);
+      onClose(); // đóng modal
   };
+
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
@@ -85,7 +101,7 @@ export default function ProductPopup({ onClose, onSubmit, product = null, mode =
         {/* Header */}
         <div className="flex justify-between items-center px-6 py-4 bg-red-600 text-white">
           <h2 className="text-lg font-semibold">
-            {product ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"}
+            {isEditMode ? "Chỉnh sửa sản phẩm" : "Thêm sản phẩm mới"}
           </h2>
           <button onClick={onClose} className="hover:text-gray-200">
             <X size={22} />
@@ -96,15 +112,16 @@ export default function ProductPopup({ onClose, onSubmit, product = null, mode =
         <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-6 p-6">
           {/* Left */}
           <div className="flex flex-col gap-4">
-            <Input label="Tên sản phẩm" name="title" value={formData.title} onChange={handleChange} />
+            <Input label="Tên sản phẩm" name="title" value={formData.title} onChange={handleChange} error={errors.title} />
             <Select
               label="Danh mục"
               name="category"
               value={formData.category}
               onChange={handleChange}
               options={categories}
+              error={errors.category}
             />
-            <Input label="Giá (₫)" name="price" type="number" value={formData.price} onChange={handleChange} />
+            <Input label="Giá (₫)" name="price" type="number" value={formData.price} onChange={handleChange} error={errors.price} />
             <Input label="Số lượng tồn" name="stock" type="number" value={formData.stock} onChange={handleChange} />
             <Textarea label="Mô tả sản phẩm" name="description" value={formData.description} onChange={handleChange} />
           </div>
@@ -144,41 +161,26 @@ export default function ProductPopup({ onClose, onSubmit, product = null, mode =
             onClick={handleSubmit}
             className="px-5 py-2 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 transition"
           >
-            {product ? "Lưu thay đổi" : "Thêm sản phẩm"}
+            {isEditMode ? "Lưu thay đổi" : "Thêm sản phẩm"}
           </button>
         </div>
       </div>
 
       {/* Popup xác nhận */}
       {showConfirm && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-xl shadow-xl text-center w-[400px]">
-            <h3 className="text-lg font-semibold mb-4">
-              {product ? "Xác nhận lưu thay đổi?" : "Xác nhận thêm sản phẩm?"}
-            </h3>
-            <div className="flex justify-center gap-3">
-              <button
-                onClick={() => setShowConfirm(false)}
-                className="px-4 py-2 border rounded-lg hover:bg-gray-100"
-              >
-                Hủy
-              </button>
-              <button
-                onClick={confirmSubmit}
-                className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-              >
-                Xác nhận
-              </button>
-            </div>
-          </div>
-        </div>
+          <ConfirmPopup
+              title={product ? "Xác nhận lưu thay đổi?" : "Xác nhận thêm sản phẩm?"}
+              message={`Bạn có chắc chắn muốn ${product ? "lưu thay đổi" : "thêm"} sản phẩm "${formData.title}" không?`}
+              onCancel={() => setShowConfirm(false)}
+              onConfirm={confirmSubmit}
+          />
       )}
     </div>
   );
 }
 
 /* Input / Select / Textarea tái sử dụng */
-function Input({ label, name, value, onChange, type = "text" }) {
+function Input({ label, name, value, onChange, type = "text", error }) {
   return (
     <div className="flex flex-col">
       <label className="text-gray-700 font-medium mb-1">{label}</label>
@@ -187,8 +189,11 @@ function Input({ label, name, value, onChange, type = "text" }) {
         name={name}
         value={value}
         onChange={onChange}
-        className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none transition"
+        className={`border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none transition ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
       />
+      {error && <span className="text-red-600 text-sm mt-1">{error}</span>}
     </div>
   );
 }
@@ -208,7 +213,7 @@ function Textarea({ label, name, value, onChange }) {
   );
 }
 
-function Select({ label, name, value, onChange, options }) {
+function Select({ label, name, value, onChange, options, error }) {
   return (
     <div className="flex flex-col">
       <label className="text-gray-700 font-medium mb-1">{label}</label>
@@ -216,7 +221,9 @@ function Select({ label, name, value, onChange, options }) {
         name={name}
         value={value}
         onChange={onChange}
-        className="border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none transition"
+        className={`border rounded-lg px-3 py-2 focus:ring-2 focus:ring-red-500 outline-none transition ${
+          error ? "border-red-500" : "border-gray-300"
+        }`}
       >
         <option value="">-- Chọn danh mục --</option>
         {options.map((opt, idx) => (
@@ -225,6 +232,8 @@ function Select({ label, name, value, onChange, options }) {
           </option>
         ))}
       </select>
+      {error && <span className="text-red-600 text-sm mt-1">{error}</span>}
     </div>
   );
 }
+
