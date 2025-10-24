@@ -2,6 +2,7 @@ import { Heart, ShoppingCart, Truck, RotateCcw } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
+import Quantity from "../Quantity";
 
 function ProductInfo({ productId }) {
     const [quantity, setQuantity] = useState(1);
@@ -100,23 +101,7 @@ function ProductInfo({ productId }) {
 
             {/* Quantity and Add to Cart */}
             <div className="mb-6 flex gap-4">
-                <div className="border-border flex items-center rounded-lg border">
-                    <button
-                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                        className="hover:bg-primary rounded-l-lg px-4 py-2 transition-colors"
-                    >
-                        −
-                    </button>
-                    <span className="border-border border-r border-l px-6 py-2">
-                        {quantity}
-                    </span>
-                    <button
-                        onClick={() => setQuantity(quantity + 1)}
-                        className="hover:bg-primary rounded-r-lg px-4 py-2 transition-colors"
-                    >
-                        +
-                    </button>
-                </div>
+                <Quantity quantity={quantity} setQuantity={setQuantity} />
                 <Button className="w-40 py-5">
                     <ShoppingCart size={20} />
                     Buy Now

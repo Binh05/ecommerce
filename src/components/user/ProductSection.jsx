@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { Heart, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function ProductHeader({ title, children, className }) {
     return (
@@ -21,6 +22,7 @@ function ProductHeader({ title, children, className }) {
 }
 
 function ProductCard({
+    id = 104,
     discount,
     image,
     name,
@@ -30,7 +32,7 @@ function ProductCard({
     reviews = 90,
 }) {
     return (
-        <div className="group">
+        <Link to={`/detail/${id}`} className="group">
             <div className="relative mb-4 aspect-square overflow-hidden rounded bg-gray-100">
                 {discount && (
                     <div className="absolute top-3 left-3 z-10 rounded bg-red-500 px-3 py-1 text-sm font-semibold text-white">
@@ -69,7 +71,7 @@ function ProductCard({
                 </div>
                 <span className="text-sm text-gray-600">({reviews})</span>
             </div>
-        </div>
+        </Link>
     );
 }
 

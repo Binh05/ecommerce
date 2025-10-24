@@ -1,7 +1,21 @@
+import { useState, useEffect } from "react";
+import { ProductApi } from "@/apis";
 import ProductInfo from "./ProductInfo";
 import ImgBtnSlider from "./ImgBtnSlider";
 
 function DetailProduct({ productId }) {
+    const [proImg, setProImg] = useState("");
+
+    useEffect(() => {
+        (async () => {
+            const res = await ProductApi.getPhoneProductApi();
+
+            setProImg(
+                res.data.products.find((pro) => pro.id === 104).thumbnail,
+            );
+        })();
+    }, []);
+
     const product = {
         id: productId,
         name: "Havic HV-G92 Gamepad",
@@ -47,7 +61,7 @@ function DetailProduct({ productId }) {
                         </div>
                         <div className="bg-secondary col-span-3 flex-1 overflow-hidden rounded-lg">
                             <img
-                                src={product.images[0] || "/placeholder.svg"}
+                                src={proImg || "./"}
                                 alt={product.name}
                                 className="h-full w-full object-cover"
                             />
