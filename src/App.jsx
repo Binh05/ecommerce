@@ -7,6 +7,7 @@ import AdminLayout from "@/pages/admin/AdminLayout";
 import AllProduct from "@/pages/user/AllProduct";
 import DetailPage from "@/pages/user/DetailPage";
 import CartPage from "./pages/user/CartPage";
+import WishlistPage from "./pages/user/Wishlist";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/a-p" element={<AllProduct />} />
             <Route path="/detail/:id" element={<DetailPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/w-l" element={<WishlistPage />} />
         </Routes>
     );
 }

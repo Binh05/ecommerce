@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Heart, Eye } from "lucide-react";
+import { Heart, Eye, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 function ProductHeader({ title, children, className }) {
@@ -30,6 +30,8 @@ function ProductCard({
     originalPrice,
     rating = 5,
     reviews = 90,
+    product,
+    trash = false,
 }) {
     return (
         <Link to={`/detail/${id}`} className="group">
@@ -41,22 +43,32 @@ function ProductCard({
                 )}
                 <img
                     loading="lazy"
-                    src={image || "/placeholder.svg"}
-                    alt={name}
+                    src={image || product?.thumbnail}
+                    alt={name || product.name}
                     className="h-full w-full object-cover transition duration-300 group-hover:scale-110"
                 />
                 <div className="absolute top-3 right-3 flex flex-col gap-2 opacity-0 transition group-hover:opacity-100">
-                    <button className="rounded-full bg-white p-2 transition hover:bg-red-500 hover:text-white">
-                        <Heart size={20} />
-                    </button>
-                    <button className="rounded-full bg-white p-2 transition hover:bg-red-500 hover:text-white">
-                        <Eye size={20} />
-                    </button>
+                    {trash ? (
+                        <IconBtn>
+                            <Trash2 size={20} />
+                        </IconBtn>
+                    ) : (
+                        <>
+                            <IconBtn>
+                                <Heart size={20} />
+                            </IconBtn>
+                            <IconBtn>
+                                <Eye size={20} />
+                            </IconBtn>
+                        </>
+                    )}
                 </div>
             </div>
-            <h3 className="mb-2 font-semibold">{name}</h3>
+            <h3 className="mb-2 font-semibold">{name || product.name}</h3>
             <div className="mb-2 flex items-center gap-2">
-                <span className="font-bold text-red-500">${price}</span>
+                <span className="font-bold text-red-500">
+                    ${price || product.price}
+                </span>
                 {originalPrice ? (
                     <span className="text-gray-400 line-through">
                         ${originalPrice}
@@ -65,13 +77,23 @@ function ProductCard({
             </div>
             <div className="flex items-center gap-1">
                 <div className="flex text-yellow-400">
-                    {[...Array(rating)].map((_, i) => (
-                        <span key={i}>★</span>
-                    ))}
+                    {[...Array(rating || Math.round(product.rating))].map(
+                        (_, i) => (
+                            <span key={i}>★</span>
+                        ),
+                    )}
                 </div>
                 <span className="text-sm text-gray-600">({reviews})</span>
             </div>
         </Link>
+    );
+}
+
+function IconBtn({ children }) {
+    return (
+        <button className="rounded-full bg-white p-2 transition hover:bg-red-500 hover:text-white">
+            {children}
+        </button>
     );
 }
 

@@ -60,9 +60,12 @@ export default function Header() {
 
                         {/* Icons */}
                         <div className="flex items-center gap-4">
-                            <button className="hover:text-primary hidden text-gray-700 transition md:block">
+                            <Link
+                                to={"/w-l"}
+                                className="hover:text-primary hidden text-gray-700 transition md:block"
+                            >
                                 <Heart size={24} />
-                            </button>
+                            </Link>
                             <Link
                                 to="/cart"
                                 className="hover:text-primary relative text-gray-700 transition"
