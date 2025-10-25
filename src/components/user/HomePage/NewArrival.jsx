@@ -1,21 +1,9 @@
 import { ProductHeader } from "@/components/user/ProductSection";
 import clsx from "clsx";
-import { ProductApi } from "@/apis";
-import { useState, useEffect } from "react";
+import { useData } from "@/context/dataContext";
 
 export default function NewArrival() {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await ProductApi.getPhoneProductApi();
-                setProducts(res.data.products.slice(17, 21));
-            } catch (error) {
-                console.error(error);
-            }
-        })();
-    }, []);
+    const products = useData().slice(16, 20);
 
     return (
         <section className="bg-white py-12 md:py-20">

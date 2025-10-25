@@ -1,22 +1,9 @@
-import { useState, useEffect } from "react";
 import { ProductHeader, ProductCard } from "@/components/user/ProductSection";
 import { Button } from "@/components/ui/button";
-import { ProductApi } from "@/apis";
+import { useData } from "@/context/dataContext";
 
 export default function ExploreProducts() {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await ProductApi.getPhoneProductApi();
-
-                setProducts(res.data.products.slice(9, 17));
-            } catch (error) {
-                console.error(error);
-            }
-        })();
-    }, []);
+    const products = useData().slice(8, 16);
 
     return (
         <section className="bg-white py-12 md:py-20">

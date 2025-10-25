@@ -1,20 +1,8 @@
-import { useState, useEffect } from "react";
-import { ProductApi } from "@/apis";
+import { useData } from "@/context/dataContext";
 import { ProductCard } from "@/components/user/ProductSection";
 
 function Products() {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await ProductApi.getPhoneProductApi();
-                setProducts(res.data.products);
-            } catch (error) {
-                console.error(error);
-            }
-        })();
-    }, []);
+    const products = useData();
 
     return (
         <div className="mx-auto mt-4 max-w-7xl px-4">

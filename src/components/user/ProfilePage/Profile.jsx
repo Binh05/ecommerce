@@ -9,6 +9,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 import clsx from "clsx";
+import AccountImg from "./AccountImg";
 
 function Profile() {
     const days = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -21,8 +22,8 @@ function Profile() {
                 <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
             </div>
             <hr className="my-8" />
-            <div className="grid grid-cols-3">
-                <form action="POST" className="col-span-2 space-y-4 px-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3">
+                <form action="POST" className="col-span-2 space-y-4 px-16">
                     <InputProfile
                         id="username"
                         placeholder="Enter your user name"
@@ -66,6 +67,7 @@ function Profile() {
                         value="Lưu"
                     />
                 </form>
+                <AccountImg className="-order-1 h-fit lg:order-1 lg:border-l" />
             </div>
         </section>
     );

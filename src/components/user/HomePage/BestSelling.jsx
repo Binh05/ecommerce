@@ -1,17 +1,9 @@
-import { useState, useEffect } from "react";
-import { ProductApi } from "@/apis";
+import { useData } from "@/context/dataContext";
 import { ProductHeader, ProductCard } from "@/components/user/ProductSection";
 import { Button } from "@/components/ui/button";
 
 export default function BestSelling() {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            const res = await ProductApi.getPhoneProductApi();
-            setProducts(res.data.products.slice(5, 9));
-        })();
-    }, []);
+    const products = useData().slice(4, 8);
 
     return (
         <section className="bg-white py-12 md:py-20">

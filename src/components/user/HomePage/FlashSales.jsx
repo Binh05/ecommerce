@@ -1,18 +1,10 @@
-import { useEffect, useState } from "react";
+import { useData } from "@/context/dataContext";
 import { Link } from "react-router-dom";
-import { ProductApi } from "@/apis/index";
 import { ProductHeader, ProductCard } from "@/components/user/ProductSection";
 import { Chevron } from "@/components/ui/chevron";
 
 export default function FlashSales() {
-    const [products, setProducts] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            const res = await ProductApi.getPhoneProductApi();
-            setProducts(res.data.products.slice(1, 5));
-        })();
-    }, []);
+    const products = useData().slice(0, 4);
 
     return (
         <section className="bg-white py-12 md:py-20">
