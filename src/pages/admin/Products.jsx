@@ -1,19 +1,12 @@
 import { useState, useEffect, useMemo } from "react";
 import styles from "./moduleCss/products.module.css";
-import { Edit, Trash2, PlusCircle, RefreshCw, Smartphone, Monitor, Phone, Camera, Headphones, Gamepad2 } from "lucide-react";
+import { Edit, Trash2, PlusCircle, RefreshCw } from "lucide-react";
 import { ProductApi } from "@/apis"; 
 import { PaginationComp } from "./components/PaginationComp.jsx";
 import ActionButton from "./components/ActionButton.jsx"; 
+import ProductPopup from "./components/ProductPopup.jsx"; 
+import { categories } from "@/constants/category.js";
 
-const categories = [
-    { name: "Tất cả", icon: null },
-    { name: "Phones", icon: Smartphone },
-    { name: "Computers", icon: Monitor },
-    { name: "SmartWatch", icon: Phone },
-    { name: "Camera", icon: Camera },
-    { name: "HeadPhones", icon: Headphones },
-    { name: "Gaming", icon: Gamepad2 },
-];
 function ProductCard({ index, product, onEdit, onDelete }) {
     return (
         <div className={styles.productCard}>
@@ -45,8 +38,11 @@ export default function Products() {
     const [products, setProducts] = useState([]);
     const [sortOption, setSortOption] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
+    const [showModal, setShowModal] = useState(false);
+    const [editProduct, setEditProduct] = useState(null);
     const itemsPerPage = 6;
 
+    // Load dữ liệu sản phẩm
     useEffect(() => {
         (async () => {
             try {
@@ -58,6 +54,7 @@ export default function Products() {
         })();
     }, []);
 
+    // Lọc và sắp xếp sản phẩm
     const filteredProducts = useMemo(() => {
         let result = products.filter((p) => {
             const matchCategory = categoryFilter === "Tất cả" || p.category === categoryFilter;
@@ -66,22 +63,12 @@ export default function Products() {
         });
 
         switch (sortOption) {
-            case "priceAsc":
-                result = [...result].sort((a, b) => a.price - b.price);
-                break;
-            case "priceDesc":
-                result = [...result].sort((a, b) => b.price - a.price);
-                break;
-            case "stockAsc":
-                result = [...result].sort((a, b) => a.stock - b.stock);
-                break;
-            case "stockDesc":
-                result = [...result].sort((a, b) => b.stock - a.stock);
-                break;
-            default:
-                break;
+            case "priceAsc": return [...result].sort((a, b) => a.price - b.price);
+            case "priceDesc": return [...result].sort((a, b) => b.price - a.price);
+            case "stockAsc": return [...result].sort((a, b) => a.stock - b.stock);
+            case "stockDesc": return [...result].sort((a, b) => b.stock - a.stock);
+            default: return result;
         }
-        return result;
     }, [categoryFilter, searchTerm, sortOption, products]);
 
     // Phân trang
@@ -91,6 +78,7 @@ export default function Products() {
         return filteredProducts.slice(startIndex, startIndex + itemsPerPage);
     }, [filteredProducts, currentPage]);
 
+    // Làm mới danh sách
     const handleRefresh = async () => {
         try {
             const res = await ProductApi.getPhoneProductApi();
@@ -100,9 +88,36 @@ export default function Products() {
             console.error("Lỗi khi làm mới dữ liệu:", error);
         }
     };
-    const handleAdd = () => console.log("Thêm sản phẩm mới");
-    const handleEdit = (p) => console.log("Sửa:", p);
-    const handleDelete = (p) => console.log("Xóa:", p);
+
+    // Mở popup thêm sản phẩm
+    const handleAdd = () => {
+        setEditProduct(null);
+        setShowModal(true);
+    };
+
+    // Mở popup sửa sản phẩm
+    const handleEdit = (product) => {
+        setEditProduct(product);
+        setShowModal(true);
+    };
+
+    // Thêm hoặc sửa sản phẩm
+    const handleSubmitProduct = (p) => {
+        if (editProduct) {
+            // Sửa sản phẩm
+            setProducts((prev) => prev.map((item) => (item.id === p.id ? p : item)));
+        } else {
+            // Thêm sản phẩm mới
+            setProducts((prev) => [p, ...prev]);
+        }
+        setShowModal(false);
+    };
+
+    const handleDelete = (p) => {
+        if (confirm(`Xác nhận xóa sản phẩm "${p.title}"?`)) {
+            setProducts((prev) => prev.filter((item) => item.id !== p.id));
+        }
+    };
 
     return (
         <div className={styles.container}>
@@ -110,9 +125,7 @@ export default function Products() {
                 <div className={styles.filters}>
                     <select className={styles.dropdown} value={categoryFilter} onChange={(e) => setCategoryFilter(e.target.value)}>
                         {categories.map((cat) => (
-                            <option key={cat.name} value={cat.name}>
-                                {cat.name}
-                            </option>
+                            <option key={cat.name} value={cat.name}>{cat.name}</option>
                         ))}
                     </select>
 
@@ -132,19 +145,10 @@ export default function Products() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                 />
+
                 <div className={styles.headerActions}>
-                    <ActionButton
-                        icon={RefreshCw}
-                        label="Làm mới"
-                        onClick={handleRefresh}
-                        color="secondary"
-                    />
-                    <ActionButton
-                        icon={PlusCircle}
-                        label="Thêm sản phẩm"
-                        onClick={handleAdd}
-                        color="primary"
-                    />
+                    <ActionButton icon={RefreshCw} label="Làm mới" onClick={handleRefresh} color="secondary" />
+                    <ActionButton icon={PlusCircle} label="Thêm sản phẩm" onClick={handleAdd} color="primary" />
                 </div>
             </div>
 
@@ -166,6 +170,14 @@ export default function Products() {
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
             />
+
+            {showModal && (
+                <ProductPopup
+                    product={editProduct}
+                    onClose={() => setShowModal(false)}
+                    onSubmit={handleSubmitProduct}
+                />
+            )}
         </div>
     );
 }
