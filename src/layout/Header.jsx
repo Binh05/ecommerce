@@ -2,16 +2,18 @@ import { Heart, ShoppingCart, User, Search, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ topbanner = true }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
         <>
             {/* Top Banner */}
-            <div className="bg-black py-2 text-center text-sm text-white">
-                Summer Sale For All Swim Suits And Free Express Delivery - OFF
-                50%! <span className="font-semibold">ShopNow</span>
-            </div>
+            {topbanner ?? (
+                <div className="bg-black py-2 text-center text-sm text-white">
+                    Summer Sale For All Swim Suits And Free Express Delivery -
+                    OFF 50%! <span className="font-semibold">ShopNow</span>
+                </div>
+            )}
 
             {/* Main Header */}
             <header className="border-b border-gray-200">
@@ -75,9 +77,12 @@ export default function Header() {
                                     2
                                 </span>
                             </Link>
-                            <button className="hover:text-primary text-gray-700 transition">
+                            <Link
+                                to="/account/profile"
+                                className="hover:text-primary text-gray-700 transition"
+                            >
                                 <User size={24} />
-                            </button>
+                            </Link>
                             <button
                                 className="md:hidden"
                                 onClick={() => setIsMenuOpen(!isMenuOpen)}
